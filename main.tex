@@ -1,0 +1,44 @@
+\documentclass[a4paper,twoside, 12pt]{report}
+
+% Packages
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern} % Use Latin Modern fonts
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage[unicode, pdftex,bookmarks=true,breaklinks=true]{hyperref}
+\usepackage{microtype}
+
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black,
+    pdftitle={A practical guide to BGP},
+    pdfauthor={Daniil Baturin},
+}
+
+% Options
+\textwidth=16cm
+\textheight=25cm
+\oddsidemargin=-0.1cm
+\evensidemargin=0.11cm
+\headheight=0cm
+\topmargin=-1cm
+\parindent=1cm
+\emergencystretch=5pt
+
+% Title Page
+\title{A practical guide to BGP}
+\author{Daniil Baturin}
+
+\begin{document}
+  \input{routing_overview.tex}
+  \input{autonomous_systems.tex}
+
+\bibliographystyle{plain}
+\bibliography{bgp_bib}
+
+\end{document}

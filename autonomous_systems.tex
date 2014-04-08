@@ -1,0 +1,45 @@
+\chapter{Autonomous systems}
+
+Autonomous system (AS) is defined as a group of connected networks with a single routing policy\cite{rfc1930}.
+
+From technical point of view, an \emph{autonomous system} (AS) is a group of BGP routers that use the same
+\emph{autonomous system number} (ASN).
+
+\section{AS numbers}
+
+Autonomous system number is an unsigned 32-bit number, so it can take values from 1 to 4294967294.
+Before 2007 16-bit numbers were used but rapid growth of the Internet required range expansion\cite{rfc6793}.
+Older BGP implementations may not have 32-bit AS number support, but backwards compatibility mechanisms allow
+them to receive routing information from implementations that use 32-bit AS numbers, with some limitations.
+
+Organizational side is more complex. ASN must be unique within its visibility scope to ensure proper
+operation of the routing protocol, so there must be a way to ensure uniqueness.
+
+In private internets that do not directly communicate routing information to the Internet the administrator is
+responsible for ASN distribution. Technically it is not impossible to use any numbers such as 123,
+but it is recommended to use numbers from a special ranges reserved for private use, 64512 to 65535 for
+16-bit\cite{rfc1930} and 4200000000 to 4294967294 for 32-bit\cite{rfc6996}.
+
+Two other ranges of AS numbers are reserved for examples and documentation, 64496 to 64511 for 16-bit and
+65536 to 65551 for 32-bit\cite{rfc5398}.
+
+Private autonomous systems that use BGP for internal routing do not have to be completely isolated from the Internet,
+they only must not include AS numbers from private ranges in routing information sent to Internet peers. Using private
+numbers inside the network and globally unique numbers on border routers that advertise network as a whole to the Internet
+is a common practice.
+
+Globally unique AS numbers for use in the Internet are assigned by IANA and Regional Internet Registries (RIRs): AfriNIC, APNIC,
+ARIN, LACNIC, and RIPE NCC. Registration procedure details depend on the RIR, but generally it requires explanation why
+an AS is needed and a yearly registration fee. Typically a company will request an IP address block at the same time.
+In case of those autonomous systems registered by RIRs, the routing policy is formally defined and stored in WHOIS database.
+
+\section{Types of autonomous systems}
+
+Autonomous systems can be \emph{single-homed} or \emph{multi-homed}. Multi-homed AS is an AS that has connections to more than
+one other AS. Single-homed AS is sometimes referred to as ``stub AS".
+
+Autonomous system is a \emph{transit autonomous system} if it allows traffic from other autonomours systems to pass through it.
+
+\section{Choosing between public and private AS}
+
+
