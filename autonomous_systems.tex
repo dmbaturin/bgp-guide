@@ -36,10 +36,18 @@ In case of those autonomous systems registered by RIRs, the routing policy is fo
 \section{Types of autonomous systems}
 
 Autonomous systems can be \emph{single-homed} or \emph{multi-homed}. Multi-homed AS is an AS that has connections to more than
-one other AS. Single-homed AS is sometimes referred to as ``stub AS".
+one other AS. Single-homed AS is sometimes referred to as ``stub AS''.
 
 Autonomous system is a \emph{transit autonomous system} if it allows traffic from other autonomours systems to pass through it.
 
 \section{Choosing between public and private AS}
 
+Whether you need to apply for a public ASN registration depends on your network setup and use cases.
 
+For multihomed autonomous systems a public ASN is the only option. Single-homed autonomous systems may or may not
+have a public ASN.
+
+If you are planning to use redundant connections to the same IP operator, some operators may require a public ASN,
+other may use a private ASN for interfacing with your network and advertise your network address on your behalf.
+
+If you are planning to use BGP internally, e.g. inside a VPN, there is no need for public ASN.
