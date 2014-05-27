@@ -14,6 +14,10 @@
 # *.eps
 # *.pdf
 
+# EPS files converted to PDF by pdflatex at compile time
+# with repstopdf
+*-converted-to.pdf
+
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
 *.bcf
