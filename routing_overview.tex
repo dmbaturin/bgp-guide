@@ -4,10 +4,11 @@ Network routing is the process of determining packet path.
 
 \section{Network addressing}
 
-Internets consist of hosts and every host is identified by a unique address.
+Internets consist of hosts and every host is identified by a unique address. Network address is a an unsigned integer number.
+Different versions of the IP protocol use different address size, IPv4 addresses are 32 bit, and IPv6 addresses are 128 bit long.
 
-Hosts are organized into networks, for that purpose hosts from the same group are assigned with addresses from a contiguous block.
-The common part of those addresses is known as \emph{network address}.
+Hosts are organized into networks, for that purpose hosts from the same group are assigned with addresses from a contiguous block
+of addresses starting with the same bit sequence. The common part of those addresses is known as \emph{network address}.
 
 It would be extremely inefficient to store information about every single host, so all routing decisions
 are taken in terms of networks. When a router receives a packet, it takes its destination address and
