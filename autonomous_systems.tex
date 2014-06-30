@@ -54,18 +54,6 @@ and transit because it is connected to all other autonomous systems and allows t
 as gray arros suggest. AS3 and AS4 are multi-homed, but not transit. Note that AS2 is not a transit AS for AS4 relative to
 AS3---autonomous systems do not have to treat all other autonomous systems equally.
 
-\section{Choosing between public and private AS}
-
-Whether you need to apply for a public ASN registration depends on your network setup and use cases.
-
-For multihomed autonomous systems a public ASN is the only option. Single-homed autonomous systems may or may not
-have a public ASN.
-
-If you are planning to use redundant connections to the same IP operator, some operators may require a public ASN,
-other may use a private ASN for interfacing with your network and advertise your network address on your behalf.
-
-If you are planning to use BGP internally, e.g. inside a VPN, there is no need for public ASN.
-
 \section{AS numbers}
 
 From technical point of view, an \emph{autonomous system} (AS) is a group of BGP routers that use the same
@@ -96,3 +84,15 @@ Globally unique AS numbers for use in the Internet are assigned by IANA and Regi
 ARIN, LACNIC, and RIPE NCC. Registration procedure details depend on the RIR, but generally it requires explanation why
 an AS is needed and a yearly registration fee. Typically a company will request an IP address block at the same time.
 In case of those autonomous systems registered by RIRs, the routing policy is formally defined and stored in WHOIS database.
+
+\section{Choosing between public and private AS}
+
+Whether you need to apply for a public ASN registration depends on your network setup and use cases.
+
+For multihomed autonomous systems a public ASN is the only option. Single-homed autonomous systems may or may not
+have a public ASN.
+
+If you are planning to use redundant connections to the same IP operator, some operators may require a public ASN,
+other may use a private ASN for interfacing with your network and advertise your network address on your behalf.
+
+If you are planning to use BGP internally, e.g. inside a VPN, there is no need for public ASN.
