@@ -128,3 +128,82 @@ be used for routing decision for that packet.
 \section{Connected routes}
 
 
+\section{Dynamic routing and route lifecycle}
+
+Configuring all routes statically quickly becomes unmanageable even in moderately large networks.
+If you have several routers, in order to add, remove, or change a route you need to update the 
+configuration on each router. This is tedious and error prone. For this reason dynamic routing
+protocols were invented.
+
+Routing protocols serve purposes: they exchange routing information between systems and
+perform initial best path selection. When a new route appears in one system, it is advertised
+to all other, and if a route becomes unavailable, it is automatically withdrawn from routing tables.
+
+Dynamic routing does not replace static routing, but complements it. A system may have both
+statically configured and dynamically learned routes.
+
+Typical architecture of a router includes the following components:
+
+\begin{itemize}
+\item Routing protocol processes
+\item Routing Internet Base (RIB)
+\item Forwarding Internet Base (FIB)
+\end{itemize}
+
+Together routing protocol processes and the RIB process form a \term{routing control plane}.
+The FIB is used by a \term{forwarding plane}. Forwarding plane may be implemented in software
+or hardware, while control plane is always implemented in software.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{graphics/router_architecture.eps}
+    \caption{Router architecture}
+    \label{fig:router_architecture}
+\end{figure}
+
+Every routing protocol process maintains its own route table that only contains routes learned
+from the protocol it handles. If there is more than one route to the same destination, it
+chooses the best of those routes and sends it to the RIB. It also receives routes that
+are to be advertised to peers from the RIB.
+
+RIB collects all routes received from routing protocol processes. It then chooses the best
+routes to every destination and sends the to the FIB. Thus if there are routes to the same
+destination learned from different protocols, the best of those will be used. Static routes
+are configured directly in the RIB and are also considered in the best path selection process,
+as well as connected routes.
+
+Forwarding plane performs actual packet forwarding according to the FIB routes.
+
+In Linux/Quagga stack, bgpd, ospfd etc. are routing protocol processes, zebra is the RIB,
+and the Linux kernel is the forwarding plane.
+
+\subsection{Administrative distance}
+
+As mentioned above, the RIB chooses the best route from routes those supplied by routing 
+protocol processes, static routes, and connected routes. However, it needs some criteria
+for choosing between those routes.
+
+Routes are sorted by administrative distance. Administrative distance is a number that
+defines how preferrable routes learned from some protocol are. Unless you have changed it
+in the Quagga configuration, the defaults are:
+
+\ \\
+
+\noindent{}\begin{tabular}{ll}
+\hline
+Connected & 0 \\
+Static & 1 \\
+eBGP & 20 \\
+OSPF & 110 \\
+ISIS & 115 \\
+RIP (and RIPng) 120 \\
+iBGP & 200 \\
+\hline
+\end{tabular}
+
+\ \\
+
+Values for dynamic routing protocols can be arbitrary, but the order of connected
+and static routes is important. Connected routes should always come first, since
+they define gateway reachability. Static routes are often used to override dynamically
+learned routes, so they should also come first.
