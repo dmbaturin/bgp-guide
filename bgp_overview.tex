@@ -1,0 +1,28 @@
+\chapter{BGP overview}
+
+As we have already learned, BGP is a dynamic routing protocol and its purpose
+is to communicate routing information between routers. Routers that run a BGP process
+are often referred to as ``BGP speakers''.
+
+Autonomous systems normally have few connection points, so BGP does not include any
+neighbor discovery mechanism. To become BGP neighbors, that is, be able to exchange
+routing information, routers need to be configured manually. Internally, a BGP session
+is a TCP connection, and BGP processes listen on port 179.
+
+Since the main idea of an autonomous system is to hide unnecessary internal structure
+details, BGP does not automatically select any routes from the system routing table
+for advertising to neighbors either.
+The list of networks that will be advertised to neighbors is configured explicitly.
+It can be specified manually, or imported from another protocol, e.g. static routes or
+OSPF.
+
+Because any details of autonomous system's internals are hidden, all network distances
+are expressed in terms of autonomous system numbers. This makes autonomous system number
+an important configuration parameter, and BGP implementations require the administrator
+to specify it. 
+
+By default, BGP advertises all routes configured in the network list and all routes learned
+from neighbors. Advertising a route learned from a neighboring AS means becoming a transit
+AS for it, so this is not always desirable. Unconditionally accepting all routes from
+neighbors may not be desirable either, for this reason BGP supports filtering both
+incoming and outgoing routing updates.
