@@ -9,7 +9,12 @@
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{lmodern} % Use Latin Modern fonts
+%\usepackage{lmodern} % Use Latin Modern fonts
+
+\usepackage{beton}
+\usepackage{concrete}
+
+
 \usepackage{graphicx}
 \usepackage{wrapfig}
 \usepackage[unicode, pdftex,bookmarks=true,breaklinks=true]{hyperref}
@@ -39,12 +44,15 @@
 \newcommand{\term}[1] {{\textit{#1}}}
 \newcommand{\code}[1] {{\texttt{#1}}}
 
+\renewcommand{\bfdefault}{sbc}
 
 % Title Page
 \title{A practical guide to BGP}
 \author{Daniil Baturin}
 
 \begin{document}
+  \tableofcontents
+
   \input{routing_overview.tex}
   \input{autonomous_systems.tex}
   \input{bgp_overview.tex}
