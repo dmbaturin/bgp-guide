@@ -4,25 +4,23 @@ As we have already learned, BGP is a dynamic routing protocol and its purpose
 is to communicate routing information between routers. Routers that run a BGP process
 are often referred to as ``BGP speakers''.
 
-Autonomous systems normally have few connection points, so BGP does not include any
-neighbor discovery mechanism. To become BGP neighbors, that is, be able to exchange
-routing information, routers need to be configured manually. Internally, a BGP session
-is a TCP connection, and BGP processes listen on port 179.
+Routers that exchange routing information with each other are referred to as ``neighbors''
+or ``peers''. BGP does not include any neighbor discovery mechanism and all neighbor relationships
+are configured manually. 
 
-Since the main idea of an autonomous system is to hide unnecessary internal structure
-details, BGP does not automatically select any routes from the system routing table
-for advertising to neighbors either.
-The list of networks that will be advertised to neighbors is configured explicitly.
-It can be specified manually, or imported from another protocol, e.g. static routes or
-OSPF.
+BGP neighbors do not simply exchange IP packets, but establish a \term{session}.
+The underlying protocol of BGP sessions is TCP, and BGP processes usually listen
+for connections on port 179\cite{rfc4271}.
 
-Because any details of autonomous system's internals are hidden, all network distances
-are expressed in terms of autonomous system numbers. This makes autonomous system number
-an important configuration parameter, and BGP implementations require the administrator
-to specify it. 
+Once a session is established, neighbors start exchanging routing information updates
+that may either advertise a newly available route or notify that a previously advertised
+route is no longer available (\term{withdraw} a route).
 
-By default, BGP advertises all routes configured in the network list and all routes learned
-from neighbors. Advertising a route learned from a neighboring AS means becoming a transit
-AS for it, so this is not always desirable. Unconditionally accepting all routes from
-neighbors may not be desirable either, for this reason BGP supports filtering both
-incoming and outgoing routing updates.
+There are two sources of routing information: locally originated routes and routes learned
+from other neighbors. Locally originated routes must be configured explicitly. Routes learned
+from neighbors are re-advertised to other neighbors by default, unless prohibited by 
+routing policy configuration.
+
+Since inter-AS routing decisions are often heavily influenced by cost, corporate relationships,
+quality of service, and other parameters that cannot be inferred from routing information itself,
+most BGP implementations allow the administrator to configure 
