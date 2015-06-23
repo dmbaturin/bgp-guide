@@ -9,23 +9,23 @@ Network routing is the process of determining packet path.
 
 \section{Network addressing}
 
-Internets consist of hosts and every host is identified by a unique address. Network address is a an unsigned integer number.
+Internets consist of hosts and every host is identified by a unique address. A network address is an unsigned integer number.
 Different versions of the IP protocol use different address size, IPv4 addresses are 32 bit, and IPv6 addresses are 128 bit long.
 
-Hosts are organized into networks, for that purpose hosts from the same group are assigned with addresses from a contiguous block
-of addresses starting with the same bit sequence. The common part of those addresses is known as \emph{network address}.
+Hosts are organized into networks, for that purpose hosts from the same group are assigned with an addresses from a contiguous block
+of addresses starting with the same bit sequence. The common part of those addresses is known as a \emph{network address}.
 
 It would be extremely inefficient to store information about every single host, so all routing decisions
 are taken in terms of networks. When a router receives a packet, it takes its destination address and
-checks if it belongs any of the networks the router knows about.
+checks if it belongs to any of the networks the router knows about.
 
-Network and host parts of an address are extracted by applying a \emph{bit mask} which is commonly referred to as 
-\emph{subnet mask} in network addressing context.
+The network and host parts of an address are extracted by applying a \emph{bit mask} which is commonly referred to as 
+a \emph{subnet mask} in network addressing context.
 
-Suppose we are using $11111111111111111111111100000000_2$ mask (255.255.255.0 in dotted decimal format) that allows for 256 hosts
-in a network to extract network and host parts from 192.0.2.44 address ($11000000000000000000001000101100_2$ in binary).
+Suppose we are using $11111111111111111111111100000000_2$ as a mask (255.255.255.0 in dotted decimal format).
+This allows for 256 hosts in a network by extracting network and host parts from a 192.0.2.44 address ($1100000000000  0000000001000101100_2$ in binary).
 
-We can use bitwise logical AND operation that keeps bits at positions where the mask bits are set to 1 intact and zeroes the rest.
+We can use bitwise logical AND operations that keep bits at positions where the mask bits are set to 1 intact and zeroes the rest.
 
 \begin{tabular}{|l|l|l|}
 \hline
@@ -42,11 +42,11 @@ So we can state that
   network\ address = address\ \mathrm{AND}\ mask
 \end{equation}
 
-Different networks have different number of hosts, which requires a way to split the address space into chunks of
-different size and a way to determine how many bits of an address identify the network and how many bits
+Different networks have a different number of hosts, which requires a way to split the address space into chunks of
+different sizes, and a way to determine how many bits of an address identify the network, and how many bits
 identify the host within that network.
 
-In the early Internet this problem was solved by introduction of \emph{address classes}. The value of the first
+In the early Internet this problem was solved by the introduction of \emph{address classes}. The value of the first
 bits of the addresses used to define its class, and the class used to define network size.
 
 \begin{tabular}{|l|l|l|l|l|}
@@ -72,11 +72,11 @@ to split a network in parts to optimize internal routing.
 
 \subsection{Classless addressing}
 
-The current network addressing scheme is known as ``classless addressing". Routing approach that is based on it
-is called "classless interdomain routing" (CIDR), the addressing scheme is often referred to as	CIDR as well.
+The current network addressing scheme is known as "classless addressing". The routing approach that is based on it
+is called "classless interdomain routing" (CIDR). The addressing scheme is often referred to as CIDR as well.
 
-A CIDR-formatted address consists of two parts: address and prefix length, separated by ``/", such as 
-``2001:db8::1/64" or ``192.0.2.10/24". Prefix length is a decimal number that defines how many bits are used
+A CIDR-formatted address consists of two parts: address and prefix length, separated by "/", such as
+"2001:db8::1/64" or "192.0.2.10/24". Prefix length is a decimal number that defines how many bits are used
 for the network part of the address.
 
 
@@ -110,18 +110,17 @@ In the first entry, "S" means the route is statically configured, which is metai
 0.0.0.0/0 is the destination prefix; 192.0.2.1 is the next hop address; and eth0 is the
 outbound interface.
 
-The routing table is traversed from less specific to more specific routes. Route selection
-algorithm follows the "longest match" rule: if more than one route matches the destination,
+The routing table is traversed from less specific to more specific routes. The route selection algorithm follows the "longest match" rule: if more than one route matches the destination,
 the most specific one is used.
 
-Suppose the above system receives a packet destined to 203.0.113.250. It matches 0.0.0.0/0
+Suppose the above system receives a packet destined to 203.0.113.250. It matches the 0.0.0.0/0
 destination (as any other possible address), but there is a route to 203.0.113.0/24, which is
 more specific. Furthermore, there is a route to 203.0.113.128.0/25, which is even more specific.
-The table does not have any more specific routes, so the route with 203.0.113.128/25 prefix 
+The table does not have any more specific routes, so the route with the 203.0.113.128/25 prefix 
 will be used.
 
 If the system had a route with e.g. 201.0.113.250/32 prefix in addition to those ones, it would
-be used for routing decision for that packet.
+be used for the routing decision for that packet.
 
 
 
@@ -137,7 +136,7 @@ protocols were invented.
 
 Routing protocols serve purposes: they exchange routing information between systems and
 perform initial best path selection. When a new route appears in one system, it is advertised
-to all other, and if a route becomes unavailable, it is automatically withdrawn from routing tables.
+to all others, and if a route becomes unavailable, it is automatically withdrawn from the routing tables.
 
 Dynamic routing does not replace static routing, but complements it. A system may have both
 statically configured and dynamically learned routes.
@@ -151,8 +150,8 @@ Typical architecture of a router includes the following components:
 \end{itemize}
 
 Together routing protocol processes and the RIB process form a \term{routing control plane}.
-The FIB is used by a \term{forwarding plane}. Forwarding plane may be implemented in software
-or hardware, while control plane is always implemented in software.
+The FIB is used by a \term{forwarding plane}. A forwarding plane may be implemented in software
+or hardware, while a control plane is always implemented in software.
 
 \begin{figure}[h]
     \centering
@@ -166,20 +165,20 @@ from the protocol it handles. If there is more than one route to the same destin
 chooses the best of those routes and sends it to the RIB. It also receives routes that
 are to be advertised to peers from the RIB.
 
-RIB collects all routes received from routing protocol processes. It then chooses the best
+The RIB collects all routes received from routing protocol processes. It then chooses the best
 routes to every destination and sends the to the FIB. Thus if there are routes to the same
 destination learned from different protocols, the best of those will be used. Static routes
 are configured directly in the RIB and are also considered in the best path selection process,
 as well as connected routes.
 
-Forwarding plane performs actual packet forwarding according to the FIB routes.
+The forwarding plane performs actual packet forwarding according to the FIB routes.
 
-In Linux/Quagga stack, bgpd, ospfd etc. are routing protocol processes, zebra is the RIB,
+In a Linux/Quagga stack, bgpd, ospfd etc. are routing protocol processes, zebra is the RIB,
 and the Linux kernel is the forwarding plane.
 
 \subsection{Administrative distance}
 
-As mentioned above, the RIB chooses the best route from routes those supplied by routing 
+As mentioned above, the RIB chooses the best route from those supplied by the routing 
 protocol processes, static routes, and connected routes. However, it needs some criteria
 for choosing between those routes.
 
@@ -196,7 +195,7 @@ Static & 1 \\
 eBGP & 20 \\
 OSPF & 110 \\
 ISIS & 115 \\
-RIP (and RIPng) 120 \\
+RIP (and RIPng) & 120 \\
 iBGP & 200 \\
 \hline
 \end{tabular}
